@@ -6,6 +6,7 @@ use AppBundle\Entity\Advert;
 use AppBundle\Entity\Candidate;
 use AppBundle\Entity\User;
 use AppBundle\Form\AdvertType;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -70,9 +71,12 @@ class AdvertController extends Controller
 
     /**
      * @Route("/advert/{id}/delete", name="advert_delete")
+     * @Method("DELETE")
      */
     public function deleteAction(Advert $advert){
         $em = $this->getDoctrine()->getManager();
+
+        $id = $advert->getId();
 
         try
         {
@@ -84,7 +88,7 @@ class AdvertController extends Controller
             return new JsonResponse($e->getMessage(),400);
         }
 
-        return new JsonResponse('ok',200);
+        return new JsonResponse(['response' => 'yes' ,'id' => $id],200);
 
     }
 

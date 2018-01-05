@@ -49,25 +49,20 @@ class Advert
     private $candidates;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="status", type="string", length=50)
+     */
+    private $status;
+
+    /**
      * Constructor
      */
     public function __construct()
     {
         $this->candidates = new ArrayCollection();
+        $this->status = 'created';
     }
-
-
-
-    public function getPostuler()
-    {
-        return $this->id;
-//        $postuler = $this->getGouvernanceByImport()->filter(function($ligne){
-//            return $ligne->getFlag() !== null;
-//        });
-//
-//        return $postuler->count();
-    }
-
 
     /**
      * Get id
@@ -183,5 +178,29 @@ class Advert
     public function getCandidates()
     {
         return $this->candidates;
+    }
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     *
+     * @return Advert
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
     }
 }

@@ -33,8 +33,10 @@
         {% block body %}{% endblock %}
     </div>
         {% block javascripts %}
+            <script type="text/javascript" src="{{ asset('assets/general/jquery/jquery.min.js')}}"></script>
             <script type="text/javascript" src="{{ asset('assets/general/bootstrap-3.3.7/js/bootstrap.min.js')}}"></script>
             <script type="text/javascript" src="{{ asset('assets/general/sweetalert/sweetalert.js')}}"></script>
         {% endblock %}
+        {% block js %}{% endblock %}
     </body>
 </html>
