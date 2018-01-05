@@ -1,3 +1,5 @@
+.idea/
+
 # Email spool folder
 /app/spool/*
 
@@ -8,6 +10,7 @@
 !var/cache/.gitkeep
 !var/logs/.gitkeep
 !var/sessions/.gitkeep
+var/
 
 # Parameters
 /app/config/parameters.yml
