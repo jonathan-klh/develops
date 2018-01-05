@@ -56,19 +56,6 @@ class Advert
         $this->candidates = new ArrayCollection();
     }
 
-
-
-    public function getPostuler()
-    {
-        return $this->id;
-//        $postuler = $this->getGouvernanceByImport()->filter(function($ligne){
-//            return $ligne->getFlag() !== null;
-//        });
-//
-//        return $postuler->count();
-    }
-
-
     /**
      * Get id
      *
