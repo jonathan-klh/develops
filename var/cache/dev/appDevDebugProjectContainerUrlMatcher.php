@@ -147,6 +147,11 @@ class appDevDebugProjectContainerUrlMatcher extends Symfony\Bundle\FrameworkBund
             return $ret;
         }
 
+        // informations
+        if ('/informations' === $pathinfo) {
+            return array (  '_controller' => 'AppBundle\\Controller\\UserController::modifsInfosAction',  '_route' => 'informations',);
+        }
+
         if (0 === strpos($pathinfo, '/login')) {
             // fos_user_security_login
             if ('/login' === $pathinfo) {

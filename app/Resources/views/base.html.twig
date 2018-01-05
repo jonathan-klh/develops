@@ -18,7 +18,13 @@
             <ul class="nav navbar-nav">
                 <li class="active"><a href="{{ path('homepage') }}">Accueil</a></li>
                 <li><a href="{{ path('advert_index') }}">Annonces</a></li>
-                <li><a href="#"></a></li>
+                {% if app.user %}
+                    <li><a href="{{ path('fos_user_security_logout') }}" class="my-sm-0">Se deconnecter</a></li>
+                    <li><a href="{{ path('informations') }}" class="my-sm-0">Compléter mon profil</a></li>
+                {% else %}
+                    <li><a href="{{ path('fos_user_security_login') }}" class="my-sm-0">Se connecter</a></li>
+                    <li><a href="{{ path('fos_user_registration_register') }}">S'inscrire</a></li>
+                {% endif %}
             </ul>
         </div>
     </nav>

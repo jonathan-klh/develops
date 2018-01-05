@@ -32,17 +32,17 @@ class User extends BaseUser
     private $candidate;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text")
      */
     private $description;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text")
      */
     private $formation;
 
     /**
-     * @ORM\Column(type="text", nullable=true)
+     * @ORM\Column(type="text")
      */
     private $experiencesPro;
 
@@ -110,77 +110,5 @@ class User extends BaseUser
     public function getCandidate()
     {
         return $this->candidate;
-    }
-
-    /**
-     * Set description
-     *
-     * @param string $description
-     *
-     * @return User
-     */
-    public function setDescription($description)
-    {
-        $this->description = $description;
-
-        return $this;
-    }
-
-    /**
-     * Get description
-     *
-     * @return string
-     */
-    public function getDescription()
-    {
-        return $this->description;
-    }
-
-    /**
-     * Set formation
-     *
-     * @param string $formation
-     *
-     * @return User
-     */
-    public function setFormation($formation)
-    {
-        $this->formation = $formation;
-
-        return $this;
-    }
-
-    /**
-     * Get formation
-     *
-     * @return string
-     */
-    public function getFormation()
-    {
-        return $this->formation;
-    }
-
-    /**
-     * Set experiencesPro
-     *
-     * @param string $experiencesPro
-     *
-     * @return User
-     */
-    public function setExperiencesPro($experiencesPro)
-    {
-        $this->experiencesPro = $experiencesPro;
-
-        return $this;
-    }
-
-    /**
-     * Get experiencesPro
-     *
-     * @return string
-     */
-    public function getExperiencesPro()
-    {
-        return $this->experiencesPro;
     }
 }
