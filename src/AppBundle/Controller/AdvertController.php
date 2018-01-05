@@ -3,8 +3,6 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Advert;
-use AppBundle\Entity\Candidate;
-use AppBundle\Entity\User;
 use AppBundle\Form\AdvertType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
@@ -114,15 +112,10 @@ class AdvertController extends Controller
         $user = $this->getUser();
 
         $advert->getCandidates()->add($user);
-//        $candidat = new Candidate();
-//        $candidat->setUser($user);
-//        $candidat->setAdvert($advert);
+
         $em->persist($advert);
 
         $em->flush();
-
-//        $em->persist($candidat);
-
 
         return $this->redirectToRoute('advert_index');
     }
