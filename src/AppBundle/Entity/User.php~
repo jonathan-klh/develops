@@ -26,30 +26,31 @@ class User extends BaseUser
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Advert", inversedBy="candidates")
-     * @ORM\JoinColumn(name="advert_id", referencedColumnName="id")
-     */
-    private $candidate;
-
-    /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $description;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $formation;
 
     /**
-     * @ORM\Column(type="text")
+     * @ORM\Column(type="text", nullable=true)
      */
     private $experiencesPro;
+
+    /**
+     * @ORM\ManyToMany(targetEntity="Advert", inversedBy="candidates")
+     */
+    private $adverts;
+
 
 
     public function __construct()
     {
         parent::__construct();
+        $this->adverts = new ArrayCollection();
         $this->advertsCreate = new ArrayCollection();
     }
 
@@ -88,27 +89,78 @@ class User extends BaseUser
         return $this->advertsCreate;
     }
 
+
     /**
-     * Set candidate
+     * Set description
      *
-     * @param \AppBundle\Entity\Advert $candidate
+     * @param string $description
      *
      * @return User
      */
-    public function setCandidate(\AppBundle\Entity\Advert $candidate = null)
+    public function setDescription($description)
     {
-        $this->candidate = $candidate;
+        $this->description = $description;
 
         return $this;
     }
 
     /**
-     * Get candidate
+     * Get description
      *
-     * @return \AppBundle\Entity\Advert
+     * @return string
      */
-    public function getCandidate()
+    public function getDescription()
     {
-        return $this->candidate;
+        return $this->description;
     }
+
+    /**
+     * Set formation
+     *
+     * @param string $formation
+     *
+     * @return User
+     */
+    public function setFormation($formation)
+    {
+        $this->formation = $formation;
+
+        return $this;
+    }
+
+    /**
+     * Get formation
+     *
+     * @return string
+     */
+    public function getFormation()
+    {
+        return $this->formation;
+    }
+
+    /**
+     * Set experiencesPro
+     *
+     * @param string $experiencesPro
+     *
+     * @return User
+     */
+    public function setExperiencesPro($experiencesPro)
+    {
+        $this->experiencesPro = $experiencesPro;
+
+        return $this;
+    }
+
+    /**
+     * Get experiencesPro
+     *
+     * @return string
+     */
+    public function getExperiencesPro()
+    {
+        return $this->experiencesPro;
+    }
+
+
 }

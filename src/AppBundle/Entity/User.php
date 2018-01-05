@@ -26,12 +26,6 @@ class User extends BaseUser
 
 
     /**
-     * @ORM\ManyToOne(targetEntity="Advert", inversedBy="candidates")
-     * @ORM\JoinColumn(name="advert_id", referencedColumnName="id")
-     */
-    private $candidate;
-
-    /**
      * @ORM\Column(type="text", nullable=true)
      */
     private $description;
@@ -46,10 +40,17 @@ class User extends BaseUser
      */
     private $experiencesPro;
 
+    /**
+     * @ORM\ManyToMany(targetEntity="Advert", inversedBy="candidates")
+     */
+    private $adverts;
+
+
 
     public function __construct()
     {
         parent::__construct();
+        $this->adverts = new ArrayCollection();
         $this->advertsCreate = new ArrayCollection();
     }
 
@@ -88,29 +89,6 @@ class User extends BaseUser
         return $this->advertsCreate;
     }
 
-    /**
-     * Set candidate
-     *
-     * @param \AppBundle\Entity\Advert $candidate
-     *
-     * @return User
-     */
-    public function setCandidate(\AppBundle\Entity\Advert $candidate = null)
-    {
-        $this->candidate = $candidate;
-
-        return $this;
-    }
-
-    /**
-     * Get candidate
-     *
-     * @return \AppBundle\Entity\Advert
-     */
-    public function getCandidate()
-    {
-        return $this->candidate;
-    }
 
     /**
      * Set description
@@ -182,5 +160,41 @@ class User extends BaseUser
     public function getExperiencesPro()
     {
         return $this->experiencesPro;
+    }
+
+
+
+    /**
+     * Add advert
+     *
+     * @param \AppBundle\Entity\Advert $advert
+     *
+     * @return User
+     */
+    public function addAdvert(\AppBundle\Entity\Advert $advert)
+    {
+        $this->adverts[] = $advert;
+
+        return $this;
+    }
+
+    /**
+     * Remove advert
+     *
+     * @param \AppBundle\Entity\Advert $advert
+     */
+    public function removeAdvert(\AppBundle\Entity\Advert $advert)
+    {
+        $this->adverts->removeElement($advert);
+    }
+
+    /**
+     * Get adverts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAdverts()
+    {
+        return $this->adverts;
     }
 }

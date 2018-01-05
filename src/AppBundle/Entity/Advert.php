@@ -44,16 +44,18 @@ class Advert
 
 
     /**
-     * @ORM\OneToMany(targetEntity="User", mappedBy="candidate", cascade={"persist", "remove"})
-     */
-    private $candidates;
-
-    /**
      * @var string
      *
      * @ORM\Column(name="status", type="string", length=50)
      */
     private $status;
+
+    /**
+     *
+     * @ORM\ManyToMany(targetEntity="User", mappedBy="adverts")
+     * @ORM\JoinTable(name="users_adverts")
+     */
+    private $candidates;
 
     /**
      * Constructor
@@ -146,6 +148,32 @@ class Advert
         return $this->createdBy;
     }
 
+
+    /**
+     * Set status
+     *
+     * @param string $status
+     *
+     * @return Advert
+     */
+    public function setStatus($status)
+    {
+        $this->status = $status;
+
+        return $this;
+    }
+
+    /**
+     * Get status
+     *
+     * @return string
+     */
+    public function getStatus()
+    {
+        return $this->status;
+    }
+
+
     /**
      * Add candidate
      *
@@ -178,29 +206,5 @@ class Advert
     public function getCandidates()
     {
         return $this->candidates;
-    }
-
-    /**
-     * Set status
-     *
-     * @param string $status
-     *
-     * @return Advert
-     */
-    public function setStatus($status)
-    {
-        $this->status = $status;
-
-        return $this;
-    }
-
-    /**
-     * Get status
-     *
-     * @return string
-     */
-    public function getStatus()
-    {
-        return $this->status;
     }
 }

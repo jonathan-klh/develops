@@ -108,15 +108,30 @@ class AdvertController extends Controller
      */
     public function applyAction(Advert $advert)
     {
+
         $em = $this->getDoctrine()->getManager();
         $user = $this->getUser();
 
         $advert->getCandidates()->add($user);
+        $user->getAdverts()->add($advert);
 
         $em->persist($advert);
+        $em->persist($user);
 
         $em->flush();
 
         return $this->redirectToRoute('advert_index');
+    }
+
+    /**
+     * @Route("/advert/{id}/candidates", name="advert_candidates")
+     */
+    public function showCandidateAction(Advert $advert)
+    {
+        $candidates = $advert->getCandidates()->getValues();
+
+        return $this->render('advert/candidates.html.twig', [
+            'candidates' => $candidates
+        ]);
     }
 }

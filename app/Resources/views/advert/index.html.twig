@@ -8,18 +8,26 @@
     {% for advert in adverts %}
         {#{{ dump(advert.candidates.values) }}#}
         <div id="advert-{{ advert.id }}" class="panel panel-default">
-            <div class="panel-heading">{{ advert.title }}
+            <div class="panel-heading text-center">{{ advert.title }}
 
-                    {% if 'advert_index' in  app.request.get('_route') %}
-                        <a class="label label-primary pull-right" href="#{#{{ path('advert_apply', {id: advert.id}) }}#}">Posluter</a>
+                {% if 'advert_index' in  app.request.get('_route') %}
+                    <a class="label label-primary pull-right"
+                       href="{{ path('advert_apply', {id: advert.id}) }}">Posluter</a>
+                {% endif %}
+
+                {% if 'advert_my' in  app.request.get('_route') %}
+                    <a class="label label-primary pull-left" href="{{ path('advert_candidates', {id: advert.id}) }}"> candidats</a>
+                    {% if advert.status != 'in progress' %}
+                        <a class="label label-primary pull-right" href="{{ path('advert_edit', {id: advert.id}) }}">Modifier</a>
                     {% endif %}
-
+                {% endif %}
             </div>
-            <div class="panel-body">{{ advert.description }}</div>
+            <div class="panel-body text-center">{{ advert.description }}</div>
             <div class="panel-footer">
                 {{ advert.createdBy.username }}
                 {% if 'advert_my' in  app.request.get('_route') and advert.status != 'in progress' %}
-                    <a class="label label-primary pull-right" id="advert_cancel" data-title="{{ advert.title }}" data-id="{{ advert.id }}" data-href="{{ path('advert_delete', {id: advert.id}) }}">Annuler</a>
+                    <a class="label label-primary pull-right" id="advert_cancel" data-title="{{ advert.title }}"
+                       data-id="{{ advert.id }}" data-href="{{ path('advert_delete', {id: advert.id}) }}">Annuler</a>
                 {% endif %}
             </div>
         </div>
@@ -27,5 +35,5 @@
 {% endblock %}
 
 {% block js %}
-    <script type="text/javascript" src="{{ asset('assets/js/advert.js')}}"></script>
+    <script type="text/javascript" src="{{ asset('assets/js/advert.js') }}"></script>
 {% endblock %}
