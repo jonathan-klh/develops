@@ -1,0 +1,21 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+
+    <a class="btn btn-sm btn-success mgb10" href="{{ path('advert_new') }}">Créer une annonce</a>
+    <a class="btn btn-sm btn-success mgb10" href="{{ path('advert_my') }}">Mes annonces</a>
+
+    {% for advert in adverts %}
+        {#{{ dump(advert.candidates.values) }}#}
+        <div class="panel panel-default">
+            <div class="panel-heading">{{ advert.title }}
+
+                    {% if 'advert_index' in  app.request.get('_route') %}
+                        <a class="label label-primary pull-right" href="#{#{{ path('advert_apply', {id: advert.id}) }}#}">Posluter</a>
+                    {% endif %}
+            </div>
+            <div class="panel-body">{{ advert.description }}</div>
+            <div class="panel-footer">{{ advert.createdBy.username }} </div>
+        </div>
+    {% endfor %}
+{% endblock %}
