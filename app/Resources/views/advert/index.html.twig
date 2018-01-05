@@ -7,15 +7,25 @@
 
     {% for advert in adverts %}
         {#{{ dump(advert.candidates.values) }}#}
-        <div class="panel panel-default">
+        <div id="advert-{{ advert.id }}" class="panel panel-default">
             <div class="panel-heading">{{ advert.title }}
 
                     {% if 'advert_index' in  app.request.get('_route') %}
                         <a class="label label-primary pull-right" href="#{#{{ path('advert_apply', {id: advert.id}) }}#}">Posluter</a>
                     {% endif %}
+
             </div>
             <div class="panel-body">{{ advert.description }}</div>
-            <div class="panel-footer">{{ advert.createdBy.username }} </div>
+            <div class="panel-footer">
+                {{ advert.createdBy.username }}
+                {% if 'advert_my' in  app.request.get('_route') and advert.status != 'in progress' %}
+                    <a class="label label-primary pull-right" id="advert_cancel" data-title="{{ advert.title }}" data-id="{{ advert.id }}" data-href="{{ path('advert_delete', {id: advert.id}) }}">Annuler</a>
+                {% endif %}
+            </div>
         </div>
     {% endfor %}
+{% endblock %}
+
+{% block js %}
+    <script type="text/javascript" src="{{ asset('assets/js/advert.js')}}"></script>
 {% endblock %}
