@@ -10,6 +10,7 @@ use Doctrine\ORM\Mapping as ORM;
  *
  * @ORM\Table(name="advert")
  * @ORM\Entity(repositoryClass="AppBundle\Repository\AdvertRepository")
+ * @ORM\HasLifecycleCallbacks()
  */
 class Advert
 {
@@ -51,6 +52,13 @@ class Advert
     private $status;
 
     /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_date", type="datetime")
+     */
+    private $createdDate;
+
+    /**
      *
      * @ORM\ManyToMany(targetEntity="User", mappedBy="adverts")
      * @ORM\JoinTable(name="users_adverts")
@@ -64,6 +72,12 @@ class Advert
     {
         $this->candidates = new ArrayCollection();
         $this->status = 'created';
+    }
+
+    /** @ORM\PrePersist */
+    public function PrePersist()
+    {
+        $this->createdDate = new \DateTime(null, new \DateTimeZone( 'Europe/Paris'));
     }
 
     /**
@@ -206,5 +220,30 @@ class Advert
     public function getCandidates()
     {
         return $this->candidates;
+    }
+
+
+    /**
+     * Set createdDate
+     *
+     * @param \DateTime $createdDate
+     *
+     * @return Advert
+     */
+    public function setCreatedDate($createdDate)
+    {
+        $this->createdDate = $createdDate;
+
+        return $this;
+    }
+
+    /**
+     * Get createdDate
+     *
+     * @return \DateTime
+     */
+    public function getCreatedDate()
+    {
+        return $this->createdDate;
     }
 }

@@ -96,7 +96,7 @@ class AdvertController extends Controller
     public function myAdvertsAction()
     {
         $user = $this->getUser();
-        $adverts = $this->getDoctrine()->getRepository('AppBundle:Advert')->findBy(['createdBy' => $user]);
+        $adverts = $this->getDoctrine()->getRepository('AppBundle:Advert')->findBy(['createdBy' => $user], ['createdDate' => 'DESC']);
 
         return $this->render('advert/index.html.twig', [
             'adverts' => $adverts
