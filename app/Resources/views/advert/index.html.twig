@@ -8,15 +8,18 @@
     {% for advert in adverts %}
         <div id="advert-{{ advert.id }}" class="panel panel-default">
             <div class="panel-heading text-center">{{ advert.title }}
-
-                {% if 'advert_index' in  app.request.get('_route') and advert not in app.user.adverts %}
-                    <a class="label label-primary pull-right"
-                       href="{{ path('advert_apply', {id: advert.id}) }}">Posluter</a>
+                {% if 'advert_index' in  app.request.get('_route') %}
+                    {% if app.user and advert not in app.user.adverts %}
+                        <a class="label label-primary pull-right"
+                           href="{{ path('advert_apply', {id: advert.id}) }}">Posluter</a>
+                    {% endif %}
                 {% endif %}
 
-                {% if 'advert_my' in  app.request.get('_route') and advert.candidates|length > 0 %}
-                    <a class="label label-primary pull-left" href="{{ path('advert_candidates', {id: advert.id}) }}">
-                        candidats</a>
+                {% if 'advert_my' in  app.request.get('_route') %}
+                    {% if app.user and advert.candidates|length > 0 %}
+                        <a class="label label-primary pull-left" href="{{ path('advert_candidates', {id: advert.id}) }}">
+                            candidats</a>
+                    {% endif  %}
                     {% if advert.status != 'in progress' %}
                         <a class="label label-primary pull-right" href="{{ path('advert_edit', {id: advert.id}) }}">Modifier</a>
                     {% endif %}
