@@ -14,7 +14,7 @@
                        href="{{ path('advert_apply', {id: advert.id}) }}">Posluter</a>
                 {% endif %}
 
-                {% if 'advert_my' in  app.request.get('_route') %}
+                {% if 'advert_my' in  app.request.get('_route') and advert.candidates|length > 0 %}
                     <a class="label label-primary pull-left" href="{{ path('advert_candidates', {id: advert.id}) }}">
                         candidats</a>
                     {% if advert.status != 'in progress' %}
