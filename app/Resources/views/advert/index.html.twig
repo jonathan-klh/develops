@@ -16,22 +16,31 @@
                 {% endif %}
 
                 {% if 'advert_my' in  app.request.get('_route') %}
-                    {% if app.user and advert.candidates|length > 0 %}
-                        <a class="label label-primary pull-left" href="{{ path('advert_candidates', {id: advert.id}) }}">
-                            candidats</a>
-                    {% endif  %}
-                    {% if advert.status != 'in progress' %}
-                        <a class="label label-primary pull-right" href="{{ path('advert_edit', {id: advert.id}) }}">Modifier</a>
-                    {% endif %}
+                    <div class="btn-group pull-right">
+                        {#<button type="button" class="btn btn-primary">Sony</button>#}
+                        <button type="button" class="dropdown-toggle" data-toggle="dropdown">
+                            <span class="caret"></span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                            {% if app.user and advert.candidates|length > 0 %}
+                                <li><a href="{{ path('advert_candidates', {id: advert.id}) }}">candidats</a></li>
+                            {% else  %}
+                                <li><a href="#">Aucun candidat</a></li>
+                            {% endif  %}
+                            {% if advert.status != 'in progress' %}
+                                <li><a href="{{ path('advert_edit', {id: advert.id}) }}">Modifier</a></li>
+                                <li>
+                                    <a id="advert_cancel" data-title="{{ advert.title }}"
+                                   data-id="{{ advert.id }}" data-href="{{ path('advert_delete', {id: advert.id}) }}">Annuler</a>
+                                </li>
+                            {% endif %}
+                        </ul>
+                    </div>
                 {% endif %}
             </div>
             <div class="panel-body text-center">{{ advert.description }}</div>
             <div class="panel-footer">
-                {{ advert.createdBy.username }}
-                {% if 'advert_my' in  app.request.get('_route') and advert.status != 'in progress' %}
-                    <a class="label label-primary pull-right" id="advert_cancel" data-title="{{ advert.title }}"
-                       data-id="{{ advert.id }}" data-href="{{ path('advert_delete', {id: advert.id}) }}">Annuler</a>
-                {% endif %}
+                Crée par {{ advert.createdBy.username }} le {{ advert.createdDate|date("d/m/Y") }}
             </div>
         </div>
     {% endfor %}
