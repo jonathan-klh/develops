@@ -17,7 +17,20 @@ class UserController extends Controller
 {
 
     /**
-     * @Route("/informations", name="informations")
+     * @Route("/profile/show/{username}", name="show_user")
+     */
+    public function showUser($username)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('AppBundle:User')->findOneBy(['username' => $username]);
+
+        return $this->render('@FOSUser/More/show_user.html.twig', array(
+            'user' => $user
+        ));
+    }
+
+    /**
+     * @Route("/profile/informations", name="informations")
      */
     public function modifsInfosAction(Request $request) {
         $user = $this->getUser();
@@ -29,11 +42,11 @@ class UserController extends Controller
             $em = $this->getDoctrine()->getManager();
             $em->persist($user);
             $em->flush();
-            return $this->redirectToRoute('homepage');
+            return $this->redirectToRoute('fos_user_profile_show');
         }
 
-        return $this->render('informations/edit_infos.html.twig', array(
-            'form' => $form->createView()
+        return $this->render('@FOSUser/More/edit_infos.html.twig', array(
+            'form' => $form->createView(),
         ));
     }
 }
