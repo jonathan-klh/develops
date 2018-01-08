@@ -13,7 +13,7 @@
         <div id="advert-{{ advert.id }}" class="panel panel-default">
             <div class="panel-heading text-center">{{ advert.title }}
                 {% if 'advert_index' in  app.request.get('_route') %}
-                    {% if app.user and advert not in app.user.adverts %}
+                    {% if app.user and advert not in app.user.adverts and advert not in app.user.advertsCreate %}
                         <a class="label label-primary pull-right"
                            href="{{ path('advert_apply', {id: advert.id}) }}">Posluter</a>
                     {% endif %}
