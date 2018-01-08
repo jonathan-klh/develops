@@ -7,10 +7,87 @@ body{
     margin-bottom: 10px;
 }
 
-.mgr10{
+.mgr10 {
     margin-right: 10px;
 }
 
+/* --------------------- PROFIL ------------------------- */
+#profil > h1 {margin: 40px 0 0 0;text-align: center;}
+#profil .back-btn-container {
+    text-align: right;
+    margin: 10px;
+    margin-bottom: -38px;
+}
+#profil .profile-btn, #profil input[type="submit"] {
+    display: inline-block;
+    background: moccasin;
+    height: 38px;
+    line-height: 38px;
+    min-width: 110px;
+    padding: 0 15px;
+    border: 1px dotted #e49981;
+    font-weight: bold;
+    color: #464646;
+    vertical-align: top;
+    text-align: center;
+}
+#profil .profile-btn:hover, #profil input[type="submit"]:hover {
+    text-decoration: underline;
+}
+#profil .login{
+    max-width: 350px;
+}
+#profil .login, #profil .register {
+    display: block;
+    margin: 0 auto;
+    width: 100%;
+    padding: 10px 0;
+}
+#profil .confirmed{
+    text-align: center;
+    margin-top: 40px;
+}
+#profil .profile {
+    text-align: center;
+    border: 1px dashed lightgray;
+    padding: 30px 0;
+    margin: 25px auto 0 auto;
+    max-width: 500px;
+}
+#profil .profile > span {
+    display: block;
+    margin: 5px 0;
+}
+#profil .login .login-error{
+    text-align: center;
+    color: red;
+}
+#profil form > div ul, #profil form > div li{
+    list-style-type: none;
+    text-align: left;
+    margin: 0;
+    padding: 0;
+    color: red;
+}
+#profil form > div {
+    width: 237px;
+    margin: 10px auto;
+    text-align: center;
+}
+#profil .login form label[for="remember_me"]{
+    display: inline;
+}
+#profil form label {
+    display: block;
+    text-align: left;
+}
+#profil form input[type="text"], #profil form input[type="password"], #profil form input[type="email"]{
+    width: 235px;
+    height: 30px;
+    border-radius: 3px;
+    border: 1px solid lightgrey;
+    padding-left: 10px;
+}
 .w50{
     width: 50%;
 }
