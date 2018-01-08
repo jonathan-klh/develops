@@ -3,7 +3,11 @@
 {% block body %}
 
     <a class="btn btn-sm btn-success mgb10" href="{{ path('advert_new') }}">Créer une annonce</a>
-    <a class="btn btn-sm btn-success mgb10" href="{{ path('advert_my') }}">Mes annonces</a>
+    {% if is_granted('ROLE_USER') %}
+        {% if app.user.advertsCreate|length > 0 %}
+            <a class="btn btn-sm btn-success mgb10" href="{{ path('advert_my') }}">Mes annonces</a>
+        {% endif %}
+    {% endif %}
 
     {% for advert in adverts %}
         <div id="advert-{{ advert.id }}" class="panel panel-default">
