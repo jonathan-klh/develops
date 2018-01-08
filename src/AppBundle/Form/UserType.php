@@ -19,8 +19,14 @@ class UserType extends AbstractType
             ->add('description', TextType::class, array('required' => false))
             ->add('formation', TextType::class, array('required' => false))
             ->add('experiencesPro', TextType::class, array('required' => false))
-            ->add('submit', SubmitType::class);
-    }/**
+            ->add('submit', SubmitType::class, array(
+                'attr' => [
+                    'class' => 'profile-btn',
+                ],
+            ));
+    }
+    
+    /**
      * {@inheritdoc}
      */
     public function configureOptions(OptionsResolver $resolver)
