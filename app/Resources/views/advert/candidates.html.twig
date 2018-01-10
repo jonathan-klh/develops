@@ -8,7 +8,7 @@
 
             </div>
             <div class="panel-body">
-                <a href="#">Profil</a>
+                <a href="{{ path('show_user', {username: candidate.username}) }}">Profil</a>
                 <a href="{{ path('advert_select_candidate', {id: advert.id , idCandidate: candidate.id}) }}">Sélectionner</a>
                 {#{{ advert.description }}#}
             </div>
