@@ -1,0 +1,13 @@
+{% extends '::base.html.twig' %}
+{% block body %}
+    <section id="profil">
+        <h1><span class="glyphicon glyphicon-user"></span> Inscription</h1>
+        <div class="check_email">
+            {% block fos_user_content %}
+            {% trans_default_domain 'FOSUserBundle' %}
+                <p>{{ 'registration.check_email'|trans({'%email%': user.email}) }}</p>
+            {% endblock fos_user_content %}
+        </div>
+    </section>
+{% endblock %}
+

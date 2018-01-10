@@ -1,0 +1,20 @@
+{% extends '::base.html.twig' %}
+{% block body %}
+    <section id="profil">
+        <h1><span class="glyphicon glyphicon-user"></span> Mon compte</h1>
+        <div class="profile">
+            {% block fos_user_content %}
+                <span class="username"><b>Nom d'utilisateur:</b> {{ user.username }}</span>
+                <span class="email"><b>E-mail:</b> {{ user.email }}</span>
+            {% endblock fos_user_content %}
+            <a href="{{ path('fos_user_profile_edit') }}" title="Modifier mes infos" class="profile-btn">Modifier mes infos</a>
+        </div>
+
+        <h1><span class="glyphicon glyphicon-user"></span> Mes informations personnelles</h1>
+        <div class="profile">
+            <span class="username"><b>Identité : </b> {{ user.lastname ~ " " ~ user.firstname }}</span>
+            <span class="email"><b>Description : </b> {{ user.description }}</span>
+            <a href="{{ path('informations') }}" title="Compléter mon profil" class="profile-btn">Compléter mon profil</a>
+        </div>
+    </section>
+{% endblock %}
