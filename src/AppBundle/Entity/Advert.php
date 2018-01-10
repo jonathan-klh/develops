@@ -66,11 +66,6 @@ class Advert
     private $candidates;
 
     /**
-     * @ORM\OneToOne(targetEntity="Review", mappedBy="advert")
-     */
-    private $review;
-
-    /**
      * Constructor
      */
     public function __construct()

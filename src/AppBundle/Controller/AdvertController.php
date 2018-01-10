@@ -9,6 +9,7 @@ use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Service\ReviewService;
 
 class AdvertController extends Controller
 {
@@ -133,5 +134,25 @@ class AdvertController extends Controller
         return $this->render('advert/candidates.html.twig', [
             'candidates' => $candidates
         ]);
+    }
+
+    /**
+     * @Route("/advert/{id}/addreview", name="advert_add_review")
+     */
+    public function addReviewAction(Advert $advert, ReviewService $reviewService)
+    {
+        $user = $this->getUser();
+        if ($user == $advert->getCreatedBy()) {
+            $form = $reviewService->getFormReview($advert);
+            if($form === true) {
+                return $this->redirectToRoute('advert_edit', array('advert' => $advert));
+            } else {
+                return $this->render('advert/add_review.html.twig', [
+                    'form' => $form,
+                ]);
+            }
+        } else {
+            return $this->redirectToRoute('advert_index');
+        }
     }
 }

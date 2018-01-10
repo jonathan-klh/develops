@@ -60,18 +60,14 @@ class User extends BaseUser
     private $adverts;
 
     /**
-     * @var ArrayCollection $reviews
      * @ORM\OneToMany(targetEntity="Review", mappedBy="developer")
      */
     private $reviews;
 
     /**
-     * @var ArrayCollection $writtenReviews
      * @ORM\OneToMany(targetEntity="Review", mappedBy="client")
      */
     private $writtenReviews;
-
-
 
     public function __construct()
     {
@@ -271,6 +267,7 @@ class User extends BaseUser
     {
         return $this->lastname;
     }
+
 
     /**
      * Add review

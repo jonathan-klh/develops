@@ -94,18 +94,12 @@
                 </div>
                 <div class="head-body-right">
                     <div class="last-reviews">
+                        {% for review in user.reviews %}
                         <div class="l-review">
-                            <span class="l-review-content">Super boulot dans les temps avec un code très propre.</span>
-                            <span class="l-review-rate">8.5/10</span><span class="l-review-customer">M. Dubois</span>
+                            <span class="l-review-content">{{ review.comment }}</span>
+                            <span class="l-review-rate">{{ review.note }}/10</span><span class="l-review-customer">{{ review.client.firstname ~ " " ~ review.client.lastname }}</span>
                         </div>
-                        <div class="l-review">
-                            <span class="l-review-content">Disponible et à l'écoute, travail de qualité.</span>
-                            <span class="l-review-rate">8/10</span><span class="l-review-customer">A. Mobali</span>
-                        </div>
-                        <div class="l-review">
-                            <span class="l-review-content">Top, un vrai professionel !</span>
-                            <span class="l-review-rate">9.5/10</span><span class="l-review-customer">E. Mauria</span>
-                        </div>
+                        {% endfor %}
                         <a href="#" title="Consulter tous les avis">Consulter tous les avis</a>
                     </div>
                 </div>

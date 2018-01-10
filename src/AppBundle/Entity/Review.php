@@ -24,21 +24,19 @@ class Review
     /**
      * @var User $developer
      *
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="writtenReviews")
-     */
-    private $client;
-
-    /**
-     * @var User $developer
-     *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="reviews")
+     * @ORM\JoinColumn(name="developer", referencedColumnName="id")
      */
     private $developer;
 
     /**
-     * @ORM\OneToOne(targetEntity="Advert", mappedBy="review")
+     * @var User $client
+     *
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="writtenReviews")
+     * @ORM\JoinColumn(name="client", referencedColumnName="id")
      */
-    private $advert;
+    private $client;
+
 
     /**
      * @var int
@@ -114,30 +112,6 @@ class Review
     }
 
     /**
-     * Set client
-     *
-     * @param \AppBundle\Entity\User $client
-     *
-     * @return Review
-     */
-    public function setClient(\AppBundle\Entity\User $client = null)
-    {
-        $this->client = $client;
-
-        return $this;
-    }
-
-    /**
-     * Get client
-     *
-     * @return \AppBundle\Entity\User
-     */
-    public function getClient()
-    {
-        return $this->client;
-    }
-
-    /**
      * Set developer
      *
      * @param \AppBundle\Entity\User $developer
@@ -161,27 +135,28 @@ class Review
         return $this->developer;
     }
 
+
     /**
-     * Set advert
+     * Set client
      *
-     * @param \AppBundle\Entity\Advert $advert
+     * @param \AppBundle\Entity\User $client
      *
      * @return Review
      */
-    public function setAdvert(\AppBundle\Entity\Advert $advert = null)
+    public function setClient(\AppBundle\Entity\User $client = null)
     {
-        $this->advert = $advert;
+        $this->client = $client;
 
         return $this;
     }
 
     /**
-     * Get advert
+     * Get client
      *
-     * @return \AppBundle\Entity\Advert
+     * @return \AppBundle\Entity\User
      */
-    public function getAdvert()
+    public function getClient()
     {
-        return $this->advert;
+        return $this->client;
     }
 }
