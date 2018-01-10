@@ -59,6 +59,18 @@ class User extends BaseUser
      */
     private $adverts;
 
+    /**
+     * @var ArrayCollection $reviews
+     * @ORM\OneToMany(targetEntity="Review", mappedBy="developer")
+     */
+    private $reviews;
+
+    /**
+     * @var ArrayCollection $writtenReviews
+     * @ORM\OneToMany(targetEntity="Review", mappedBy="client")
+     */
+    private $writtenReviews;
+
 
 
     public function __construct()
@@ -258,5 +270,73 @@ class User extends BaseUser
     public function getLastname()
     {
         return $this->lastname;
+    }
+
+    /**
+     * Add review
+     *
+     * @param \AppBundle\Entity\Review $review
+     *
+     * @return User
+     */
+    public function addReview(\AppBundle\Entity\Review $review)
+    {
+        $this->reviews[] = $review;
+
+        return $this;
+    }
+
+    /**
+     * Remove review
+     *
+     * @param \AppBundle\Entity\Review $review
+     */
+    public function removeReview(\AppBundle\Entity\Review $review)
+    {
+        $this->reviews->removeElement($review);
+    }
+
+    /**
+     * Get reviews
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReviews()
+    {
+        return $this->reviews;
+    }
+
+    /**
+     * Add writtenReview
+     *
+     * @param \AppBundle\Entity\Review $writtenReview
+     *
+     * @return User
+     */
+    public function addWrittenReview(\AppBundle\Entity\Review $writtenReview)
+    {
+        $this->writtenReviews[] = $writtenReview;
+
+        return $this;
+    }
+
+    /**
+     * Remove writtenReview
+     *
+     * @param \AppBundle\Entity\Review $writtenReview
+     */
+    public function removeWrittenReview(\AppBundle\Entity\Review $writtenReview)
+    {
+        $this->writtenReviews->removeElement($writtenReview);
+    }
+
+    /**
+     * Get writtenReviews
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWrittenReviews()
+    {
+        return $this->writtenReviews;
     }
 }

@@ -22,20 +22,21 @@ class Review
     private $id;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="advertsCreate")
-     * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
+     * @var User $developer
+     *
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="writtenReviews")
      */
     private $client;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="advertsCreate")
-     * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
+     * @var User $developer
+     *
+     * @ORM\ManyToOne(targetEntity="User", inversedBy="reviews")
      */
-    private $candidate;
+    private $developer;
 
     /**
-     * @ORM\ManyToOne(targetEntity="User", inversedBy="advertsCreate")
-     * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
+     * @ORM\OneToOne(targetEntity="Advert", mappedBy="review")
      */
     private $advert;
 
@@ -111,5 +112,76 @@ class Review
     {
         return $this->comment;
     }
-}
 
+    /**
+     * Set client
+     *
+     * @param \AppBundle\Entity\User $client
+     *
+     * @return Review
+     */
+    public function setClient(\AppBundle\Entity\User $client = null)
+    {
+        $this->client = $client;
+
+        return $this;
+    }
+
+    /**
+     * Get client
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getClient()
+    {
+        return $this->client;
+    }
+
+    /**
+     * Set developer
+     *
+     * @param \AppBundle\Entity\User $developer
+     *
+     * @return Review
+     */
+    public function setDeveloper(\AppBundle\Entity\User $developer = null)
+    {
+        $this->developer = $developer;
+
+        return $this;
+    }
+
+    /**
+     * Get developer
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getDeveloper()
+    {
+        return $this->developer;
+    }
+
+    /**
+     * Set advert
+     *
+     * @param \AppBundle\Entity\Advert $advert
+     *
+     * @return Review
+     */
+    public function setAdvert(\AppBundle\Entity\Advert $advert = null)
+    {
+        $this->advert = $advert;
+
+        return $this;
+    }
+
+    /**
+     * Get advert
+     *
+     * @return \AppBundle\Entity\Advert
+     */
+    public function getAdvert()
+    {
+        return $this->advert;
+    }
+}
