@@ -3,11 +3,18 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 
 /**
  * Review
  *
- * @ORM\Table(name="review")
+ * @ORM\Table(name="review",
+ *    uniqueConstraints={
+ *        @UniqueConstraint(name="review_unique",
+ *            columns={"developer", "client", "advert"})
+ *    }
+ * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ReviewRepository")
  */
 class Review
@@ -37,6 +44,13 @@ class Review
      */
     private $client;
 
+    /**
+     * @var Advert $advert
+     *
+     * @ORM\OneToOne(targetEntity="Advert", inversedBy="review")
+     * @ORM\JoinColumn(name="advert", referencedColumnName="id")
+     */
+    private $advert;
 
     /**
      * @var int
@@ -51,6 +65,13 @@ class Review
      * @ORM\Column(name="comment", type="text", nullable=true)
      */
     private $comment;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_date", type="datetime")
+     */
+    private $createdDate;
 
 
     /**
@@ -158,5 +179,53 @@ class Review
     public function getClient()
     {
         return $this->client;
+    }
+
+    /**
+     * Set createdDate
+     *
+     * @param \DateTime $createdDate
+     *
+     * @return Review
+     */
+    public function setCreatedDate($createdDate)
+    {
+        $this->createdDate = $createdDate;
+
+        return $this;
+    }
+
+    /**
+     * Get createdDate
+     *
+     * @return \DateTime
+     */
+    public function getCreatedDate()
+    {
+        return $this->createdDate;
+    }
+
+    /**
+     * Set advert
+     *
+     * @param \AppBundle\Entity\Advert $advert
+     *
+     * @return Review
+     */
+    public function setAdvert(\AppBundle\Entity\Advert $advert = null)
+    {
+        $this->advert = $advert;
+
+        return $this;
+    }
+
+    /**
+     * Get advert
+     *
+     * @return \AppBundle\Entity\Advert
+     */
+    public function getAdvert()
+    {
+        return $this->advert;
     }
 }

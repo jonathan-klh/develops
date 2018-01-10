@@ -144,19 +144,16 @@ class AdvertController extends Controller
      */
     public function addReviewAction(Advert $advert, ReviewService $reviewService)
     {
-        $user = $this->getUser();
-        if ($user == $advert->getCreatedBy()) {
-            $form = $reviewService->getFormReview($advert);
+        if ($this->getUser() == $advert->getCreatedBy()){
+            $form = $reviewService->addReview($advert);
             if($form === true) {
-                return $this->redirectToRoute('advert_edit', array('advert' => $advert));
-            } else {
-                return $this->render('advert/add_review.html.twig', [
-                    'form' => $form,
-                ]);
+                return $this->redirectToRoute('advert_edit', array('id' => $advert->getId()));
             }
-        } else {
-            return $this->redirectToRoute('advert_index');
+            return $this->render('advert/add_review.html.twig', [
+                'form' => $form->createView(),
+            ]);
         }
+        return $this->redirectToRoute('advert_index');
     }
 
     /**

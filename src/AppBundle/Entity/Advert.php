@@ -43,6 +43,12 @@ class Advert
      */
     private $createdBy;
 
+    /**
+     * @ORM\OneToOne(targetEntity="Review", mappedBy="advert")
+     * @ORM\JoinColumn(name="review", referencedColumnName="id")
+     */
+    private $review;
+
 
     /**
      * @var string
@@ -277,5 +283,29 @@ class Advert
     public function getCandidateSelected()
     {
         return $this->candidateSelected;
+    }
+
+    /**
+     * Set review
+     *
+     * @param \AppBundle\Entity\Review $review
+     *
+     * @return Advert
+     */
+    public function setReview(\AppBundle\Entity\Review $review = null)
+    {
+        $this->review = $review;
+
+        return $this;
+    }
+
+    /**
+     * Get review
+     *
+     * @return \AppBundle\Entity\Review
+     */
+    public function getReview()
+    {
+        return $this->review;
     }
 }
