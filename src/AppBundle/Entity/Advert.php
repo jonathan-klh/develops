@@ -66,6 +66,14 @@ class Advert
     private $candidates;
 
     /**
+     * One Advert has One User selected (candidate).
+     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\JoinColumn(name="candidate_selected", referencedColumnName="id")
+     */
+    private $candidateSelected;
+
+
+    /**
      * Constructor
      */
     public function __construct()
@@ -245,5 +253,29 @@ class Advert
     public function getCreatedDate()
     {
         return $this->createdDate;
+    }
+
+    /**
+     * Set candidateSelected
+     *
+     * @param \AppBundle\Entity\User $candidateSelected
+     *
+     * @return Advert
+     */
+    public function setCandidateSelected(\AppBundle\Entity\User $candidateSelected = null)
+    {
+        $this->candidateSelected = $candidateSelected;
+
+        return $this;
+    }
+
+    /**
+     * Get candidateSelected
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getCandidateSelected()
+    {
+        return $this->candidateSelected;
     }
 }
