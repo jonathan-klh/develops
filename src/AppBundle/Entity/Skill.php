@@ -3,6 +3,7 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Doctrine\ORM\Mapping\OneToMany;
 
 /**
  * Skill
@@ -31,10 +32,16 @@ class Skill
     /**
      * @var string
      *
-     * @ORM\Column(name="description", type="text")
+     * @ORM\Column(name="description", type="text", nullable=true)
      */
     private $description;
 
+    /**
+     * @return string
+     */
+    public function __toString() {
+        return $this->name;
+    }
 
     /**
      * Get id

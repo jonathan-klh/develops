@@ -8,8 +8,10 @@
         <div class="edit-profile">
             {% block fos_user_content %}
                 {% trans_default_domain 'FOSUserBundle' %}
-                {{ form(form) }}
+                {{ form(form, { 'attr': {'class': 'userForm'} }) }}
             {% endblock fos_user_content %}
+
+            {{ form(formSkill, { 'attr': {'class': 'userSkillForm'} }) }}
         </div>
     </section>
 {% endblock %}

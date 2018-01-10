@@ -1,3 +1,6 @@
+/* Extra small devices (phones, less than 768px) => Taille xs */
+/* Pas de media queries de base pour un bon design il faut partir de la version MOBILE*/
+
 body{
     background-color: whitesmoke;
     font-family: "Lucida Sans Unicode", "Lucida Grande", Verdana, Arial, Helvetica, sans-serif;
@@ -88,6 +91,50 @@ body{
     border: 1px solid lightgrey;
     padding-left: 10px;
 }
+#profil.show-user{ 
+    font-size: 0;
+}
+#profil.show-user .left-infos, #profil.show-user .body-infos{
+    display: inline-block;
+    vertical-align: top;
+    font-size: 14px;
+    width: 100%;
+}
+#profil.show-user .left-infos .photo {
+    width: 180px;
+    margin: 0 auto;
+}
+#profil.show-user .left-infos .photo img {
+    width: 100%;
+}
 .w50{
     width: 50%;
 }
+
+
+
+/* Small devices (tablets, 768px and up) => Taille sm */
+@media (min-width: 768px) { 
+    #profil .login {
+        padding: 25px;
+    }
+    #profil .register {
+        width: 750px;
+    }
+ }
+
+/* Medium devices (desktops, 992px and up) => Taille md */
+@media (min-width: 992px) { 
+    #profil.show-user .left-infos{
+        width: 260px;
+    }
+    #profil.show-user .body-infos{
+        margin-left: 20px;
+        width: 660px;
+    }
+ }
+
+/* Large devices (large desktops, 1200px and up) => Taille lg*/
+@media (min-width: 1200px) { 
+
+ }

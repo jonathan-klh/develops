@@ -20,6 +20,20 @@ class User extends BaseUser
     protected $id;
 
     /**
+     * @var string
+     *
+     * @ORM\Column(name="firstname", type="string", length=70)
+     */
+    private $firstname;
+
+    /**
+     * @var string
+     *
+     * @ORM\Column(name="lastname", type="string", length=70)
+     */
+    private $lastname;
+
+    /**
      * @ORM\OneToMany(targetEntity="Advert", mappedBy="createdBy")
      */
     private $advertsCreate;
@@ -163,4 +177,38 @@ class User extends BaseUser
     }
 
 
+
+    /**
+     * Add advert
+     *
+     * @param \AppBundle\Entity\Advert $advert
+     *
+     * @return User
+     */
+    public function addAdvert(\AppBundle\Entity\Advert $advert)
+    {
+        $this->adverts[] = $advert;
+
+        return $this;
+    }
+
+    /**
+     * Remove advert
+     *
+     * @param \AppBundle\Entity\Advert $advert
+     */
+    public function removeAdvert(\AppBundle\Entity\Advert $advert)
+    {
+        $this->adverts->removeElement($advert);
+    }
+
+    /**
+     * Get adverts
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getAdverts()
+    {
+        return $this->adverts;
+    }
 }
