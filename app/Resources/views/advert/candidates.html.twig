@@ -4,6 +4,8 @@
     {% for candidate in candidates %}
         <div>
             Utilisateur : {{ candidate.username }}
+            <a href="#">Profil</a>
+            <a href="{{ path('advert_select_candidate', {id: advert.id , idCandidate: candidate.id}) }}">Sélectionner</a>
         </div>
     {% endfor %}
 {% endblock %}

@@ -3,8 +3,10 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Advert;
+use AppBundle\Entity\User;
 use AppBundle\Form\AdvertType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
@@ -131,7 +133,31 @@ class AdvertController extends Controller
         $candidates = $advert->getCandidates()->getValues();
 
         return $this->render('advert/candidates.html.twig', [
-            'candidates' => $candidates
+            'candidates' => $candidates,
+            'advert' => $advert
         ]);
+    }
+    /**
+     * @Route("/advert/{id}/candidate-selected/{idCandidate}", name="advert_select_candidate")
+     * @ParamConverter("idCandidate", class="AppBundle:User")
+     */
+    public function selectCandidateAction(Request $request, Advert $advert)
+    {
+        $user = $request->get('idCandidate');
+        $em = $this->getDoctrine()->getManager();
+
+        try{
+            $advert->setCandidateSelected($user);
+            $advert->setStatus('in progress');
+            //dump($advert);die;
+            $em->persist($advert);
+            $em->flush();
+
+        }catch ( \Exception $e ){
+            return new JsonResponse($e->getMessage(),400);
+        }
+
+        return $this->redirectToRoute('advert_candidates', ['id' => $advert->getId()]);
+
     }
 }
