@@ -3,12 +3,18 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Advert;
+use AppBundle\Entity\AdvertMessage;
+use AppBundle\Entity\User;
+use AppBundle\Form\AdvertMessageType;
 use AppBundle\Form\AdvertType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
+use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Route;
 use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
+use AppBundle\Service\ReviewService;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class AdvertController extends Controller
 {
@@ -64,6 +70,33 @@ class AdvertController extends Controller
 
         return $this->render('advert/new.html.twig', [
             'form' => $form->createView()
+        ]);
+    }
+
+    /**
+     * @Route("/advert/{id}/show", name="advert_detail")
+     */
+    public function detailAction(Request $request, Advert $advert)
+    {
+        $advertMessage = new AdvertMessage();
+        $formAdvertContact = $this->createForm(AdvertMessageType::class, $advertMessage);
+        $formAdvertContact->handleRequest($request);
+
+        if ($formAdvertContact->isSubmitted() && $formAdvertContact->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $advertMessage->setUser($this->getUser());
+            $advertMessage->setAdvert($advert);
+            $em->persist($advertMessage);
+            $em->flush();
+
+            return $this->redirectToRoute('advert_apply', array(
+                'id' => $advert->getId(),
+            ));
+        }
+
+        return $this->render('advert/show.html.twig', [
+            'advert' => $advert,
+            'formAdvertContact' => $formAdvertContact->createView(),
         ]);
     }
 
@@ -128,10 +161,80 @@ class AdvertController extends Controller
      */
     public function showCandidateAction(Advert $advert)
     {
+        if ($advert->getCandidateSelected()){
+            throw new AccessDeniedException('A candidate has already been selected');
+        }
+
+        $repo = $this->getDoctrine()->getRepository(AdvertMessage::class);
         $candidates = $advert->getCandidates()->getValues();
+        $texts = $repo->findBy(array("advert" => $advert->getId()));
 
         return $this->render('advert/candidates.html.twig', [
-            'candidates' => $candidates
+            'candidates' => $candidates,
+            'advert' => $advert,
+            'texts' => $texts
         ]);
+    }
+
+    /**
+     * @Route("/advert/{id}/review/add", name="advert_review_add")
+     */
+    public function addReviewAction(Advert $advert, ReviewService $reviewService)
+    {
+        if ($this->getUser() == $advert->getCreatedBy()){
+            $form = $reviewService->addReview($advert);
+            if($form === true) {
+                return $this->redirectToRoute('advert_detail', array('id' => $advert->getId()));
+            }
+            return $this->render('advert/edit_review.html.twig', [
+                'form' => $form->createView(),
+            ]);
+        }
+        return $this->redirectToRoute('advert_index');
+    }
+
+    /**
+     * @Route("/advert/{id}/review/edit", name="advert_review_edit")
+     */
+    public function editReviewAction(Advert $advert, ReviewService $reviewService)
+    {
+        if ($this->getUser() == $advert->getCreatedBy()){
+            $form = $reviewService->editReview($advert);
+            if($form === true) {
+                return $this->redirectToRoute('advert_detail', array('id' => $advert->getId()));
+            } elseif ($form === false) {
+                return $this->redirectToRoute('advert_detail');
+            }
+            return $this->render('advert/edit_review.html.twig', [
+                'form' => $form->createView(),
+            ]);
+        }
+        return $this->redirectToRoute('advert_index');
+    }
+
+    /**
+     * @Route("/advert/{id}/candidate-selected/{idCandidate}", name="advert_select_candidate")
+     * @ParamConverter("idCandidate", class="AppBundle:User")
+     */
+    public function selectCandidateAction(Request $request, Advert $advert)
+    {
+        if ($advert->getCandidateSelected()){
+            throw new AccessDeniedException('A candidate has already been selected');
+        }
+
+        $user = $request->get('idCandidate');
+        $em = $this->getDoctrine()->getManager();
+
+        try{
+            $advert->setCandidateSelected($user);
+            $advert->setStatus('in progress');
+            $em->persist($advert);
+            $em->flush();
+
+        }catch ( \Exception $e ){
+            return new JsonResponse($e->getMessage(),400);
+        }
+
+        return $this->redirectToRoute('advert_detail', [ 'id' => $advert->getId()]);
     }
 }

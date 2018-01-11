@@ -1,0 +1,33 @@
+{% extends 'base.html.twig' %}
+
+{% block body %}
+   <h1>
+       Détail page
+   </h1>
+    id advert : {{ advert.id }},<br>
+    {% if advert.candidateSelected.username is defined %}
+        selectionné : {{ advert.candidateSelected.username }}
+    {% endif %}
+
+    {% if app.user != advert.createdBy %}
+        {% if app.user not in advert.candidates %}
+            {{ form(formAdvertContact) }}
+        {% endif %}
+    {% endif %}
+    <br>
+    <div class="review">
+        {% if advert.review is null %}
+            <h3>Aucun avis disponible</h3>
+            {% if app.user == advert.createdBy %}
+                <a href="{{ path('advert_review_add',{'id':advert.id}) }}" title="">Laisser un avis</a>
+            {% endif %}
+        {% else %}
+            <h3>Avis :</h3>
+            <span class="note">{{ advert.review.note }}/10</span>
+            <p>{{ advert.review.comment }}</p>
+            {% if app.user == advert.createdBy %}
+                <a href="{{ path('advert_review_edit',{'id':advert.id}) }}" title="">Modifier l'avis</a>
+            {% endif %}
+        {% endif %}
+    </div>
+{% endblock %}

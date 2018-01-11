@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
 class User extends BaseUser
 {
@@ -59,7 +60,21 @@ class User extends BaseUser
      */
     private $adverts;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Review", mappedBy="candidate")
+     */
+    private $reviews;
 
+    /**
+     * @ORM\OneToMany(targetEntity="Review", mappedBy="createdBy")
+     */
+    private $writtenReviews;
+
+    /**
+     * Correspond à la note moyenne utilisateur de tous les avis en pourcentage
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $rateAvg;
 
     public function __construct()
     {
@@ -258,5 +273,98 @@ class User extends BaseUser
     public function getLastname()
     {
         return $this->lastname;
+    }
+
+
+    /**
+     * Add review
+     *
+     * @param \AppBundle\Entity\Review $review
+     *
+     * @return User
+     */
+    public function addReview(\AppBundle\Entity\Review $review)
+    {
+        $this->reviews[] = $review;
+
+        return $this;
+    }
+
+    /**
+     * Remove review
+     *
+     * @param \AppBundle\Entity\Review $review
+     */
+    public function removeReview(\AppBundle\Entity\Review $review)
+    {
+        $this->reviews->removeElement($review);
+    }
+
+    /**
+     * Get reviews
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getReviews()
+    {
+        return $this->reviews;
+    }
+
+    /**
+     * Add writtenReview
+     *
+     * @param \AppBundle\Entity\Review $writtenReview
+     *
+     * @return User
+     */
+    public function addWrittenReview(\AppBundle\Entity\Review $writtenReview)
+    {
+        $this->writtenReviews[] = $writtenReview;
+
+        return $this;
+    }
+
+    /**
+     * Remove writtenReview
+     *
+     * @param \AppBundle\Entity\Review $writtenReview
+     */
+    public function removeWrittenReview(\AppBundle\Entity\Review $writtenReview)
+    {
+        $this->writtenReviews->removeElement($writtenReview);
+    }
+
+    /**
+     * Get writtenReviews
+     *
+     * @return \Doctrine\Common\Collections\Collection
+     */
+    public function getWrittenReviews()
+    {
+        return $this->writtenReviews;
+    }
+
+    /**
+     * Set rateAvg
+     *
+     * @param float $rateAvg
+     *
+     * @return User
+     */
+    public function setRateAvg($rateAvg)
+    {
+        $this->rateAvg = $rateAvg;
+
+        return $this;
+    }
+
+    /**
+     * Get rateAvg
+     *
+     * @return float
+     */
+    public function getRateAvg()
+    {
+        return $this->rateAvg;
     }
 }

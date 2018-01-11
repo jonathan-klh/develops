@@ -1,0 +1,16 @@
+{% extends 'base.html.twig' %}
+{% block body %}
+    <h2>Laisser un avis:</h2>
+    {{ form_start(form) }}
+        <div class="form-group">
+            <label class="control-label">Note sur 10 :</label>
+            {{ form_widget(form.note,{'attr':{'class':'form-control' }}) }}
+        </div>
+        <div class="form-group">
+            <label class="control-label">Commentaire</label>
+            {{ form_widget(form.comment,{'attr':{'class':'form-control' }}) }}
+        </div>
+
+        <button class="btn btn-primary" type="submit">Valider</button>
+    {{ form_end(form) }}
+{% endblock %}

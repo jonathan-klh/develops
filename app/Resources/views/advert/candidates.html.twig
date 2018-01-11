@@ -2,8 +2,22 @@
 
 {% block body %}
     {% for candidate in candidates %}
-        <div>
-            Utilisateur : {{ candidate.username }}
+
+        <div id="candidate-{{ candidate.id }}" class="panel panel-default">
+            <div class="panel-heading">{{ candidate.username }}
+                <a href="{{ path('show_user', {username: candidate.username}) }}">Profil</a>
+                <a href="{{ path('advert_select_candidate', {id: advert.id , idCandidate: candidate.id}) }}">Sélectionner</a>
+            </div>
+            <div class="panel-body">
+                {% for text in texts %}
+                    {% if text.user.id == candidate.id %}
+                        {{ text.text }}
+                    {% endif %}
+                {% endfor %}
+            </div>
+            <div class="panel-footer">
+                Footer
+            </div>
         </div>
     {% endfor %}
 {% endblock %}
