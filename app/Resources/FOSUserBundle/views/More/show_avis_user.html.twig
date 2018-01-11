@@ -20,19 +20,15 @@
         </div>
         <div class="body-infos">
             {{ include('@FOSUser/More/_head_body.html.twig') }}
-            <div class="about-me">
-                <div class="para">
-                    <h2>A propos :</h2>
-                    <p>{{ user.description }}</p>
+            <div class="all-reviews">
+                <h2>Tous mes avis</h2>
+                {% for rw in user.reviews %}
+                <div class="review">
+                    <span class="note">{{ rw.note }}/10</span>
+                    <p>{{ rw.comment }}</p>
+                    <p>{{ rw.createdBy.firstname ~ " " ~ rw.createdBy.lastname }}</p>
                 </div>
-                <div class="para">
-                    <h2>Ma formation :</h2>
-                    <p>{{ user.formation }}</p>
-                </div>
-                <div class="para">
-                    <h2>Mon expérience professionel :</h2>
-                    <p>{{ user.experiencesPro }}</p>
-                </div>
+                {% endfor %}
             </div>
         </div>
     </section>

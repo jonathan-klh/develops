@@ -3,11 +3,18 @@
 namespace AppBundle\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
+use Symfony\Bridge\Doctrine\Validator\Constraints\UniqueEntity;
+use Doctrine\ORM\Mapping\UniqueConstraint;
 
 /**
  * Review
  *
- * @ORM\Table(name="review")
+ * @ORM\Table(name="review",
+ *    uniqueConstraints={
+ *        @UniqueConstraint(name="review_unique",
+ *            columns={"created_by", "advert", "candidate"})
+ *    }
+ * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ReviewRepository")
  */
 class Review
@@ -22,21 +29,28 @@ class Review
     private $id;
 
     /**
-     * @var User $developer
+     * @var User $candidate
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="reviews")
-     * @ORM\JoinColumn(name="developer", referencedColumnName="id")
+     * @ORM\JoinColumn(name="candidate", referencedColumnName="id")
      */
-    private $developer;
+    private $candidate;
 
     /**
-     * @var User $client
+     * @var User $createdBy
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="writtenReviews")
-     * @ORM\JoinColumn(name="client", referencedColumnName="id")
+     * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
      */
-    private $client;
+    private $createdBy;
 
+    /**
+     * @var Advert $advert
+     *
+     * @ORM\OneToOne(targetEntity="Advert", inversedBy="review", cascade={"persist"})
+     * @ORM\JoinColumn(name="advert", referencedColumnName="id")
+     */
+    private $advert;
 
     /**
      * @var int
@@ -51,6 +65,13 @@ class Review
      * @ORM\Column(name="comment", type="text", nullable=true)
      */
     private $comment;
+
+    /**
+     * @var \DateTime
+     *
+     * @ORM\Column(name="created_date", type="datetime")
+     */
+    private $createdDate;
 
 
     /**
@@ -112,51 +133,99 @@ class Review
     }
 
     /**
-     * Set developer
+     * Set createdDate
      *
-     * @param \AppBundle\Entity\User $developer
+     * @param \DateTime $createdDate
      *
      * @return Review
      */
-    public function setDeveloper(\AppBundle\Entity\User $developer = null)
+    public function setCreatedDate($createdDate)
     {
-        $this->developer = $developer;
+        $this->createdDate = $createdDate;
 
         return $this;
     }
 
     /**
-     * Get developer
+     * Get createdDate
      *
-     * @return \AppBundle\Entity\User
+     * @return \DateTime
      */
-    public function getDeveloper()
+    public function getCreatedDate()
     {
-        return $this->developer;
+        return $this->createdDate;
     }
 
-
     /**
-     * Set client
+     * Set advert
      *
-     * @param \AppBundle\Entity\User $client
+     * @param \AppBundle\Entity\Advert $advert
      *
      * @return Review
      */
-    public function setClient(\AppBundle\Entity\User $client = null)
+    public function setAdvert(\AppBundle\Entity\Advert $advert = null)
     {
-        $this->client = $client;
+        $this->advert = $advert;
+        $advert->setReview($this);
 
         return $this;
     }
 
     /**
-     * Get client
+     * Get advert
+     *
+     * @return \AppBundle\Entity\Advert
+     */
+    public function getAdvert()
+    {
+        return $this->advert;
+    }
+
+    /**
+     * Set candidate
+     *
+     * @param \AppBundle\Entity\User $candidate
+     *
+     * @return Review
+     */
+    public function setCandidate(\AppBundle\Entity\User $candidate = null)
+    {
+        $this->candidate = $candidate;
+
+        return $this;
+    }
+
+    /**
+     * Get candidate
      *
      * @return \AppBundle\Entity\User
      */
-    public function getClient()
+    public function getCandidate()
     {
-        return $this->client;
+        return $this->candidate;
+    }
+
+    /**
+     * Set createdBy
+     *
+     * @param \AppBundle\Entity\User $createdBy
+     *
+     * @return Review
+     */
+    public function setCreatedBy(\AppBundle\Entity\User $createdBy = null)
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * Get createdBy
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
     }
 }

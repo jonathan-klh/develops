@@ -37,3 +37,7 @@ services:
     review_service:
             class: "%review.service.class%"
             public: true
+    twig.extension.text:
+       class: Twig_Extensions_Extension_Text
+       tags:
+           - { name: twig.extension }
