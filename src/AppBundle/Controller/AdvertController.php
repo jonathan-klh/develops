@@ -162,7 +162,7 @@ class AdvertController extends Controller
         if ($this->getUser() == $advert->getCreatedBy()){
             $form = $reviewService->addReview($advert);
             if($form === true) {
-                return $this->redirectToRoute('advert_edit', array('id' => $advert->getId()));
+                return $this->redirectToRoute('advert_detail', array('id' => $advert->getId()));
             }
             return $this->render('advert/edit_review.html.twig', [
                 'form' => $form->createView(),
@@ -179,9 +179,9 @@ class AdvertController extends Controller
         if ($this->getUser() == $advert->getCreatedBy()){
             $form = $reviewService->editReview($advert);
             if($form === true) {
-                return $this->redirectToRoute('advert_edit', array('id' => $advert->getId()));
+                return $this->redirectToRoute('advert_detail', array('id' => $advert->getId()));
             } elseif ($form === false) {
-                return $this->redirectToRoute('advert_index');
+                return $this->redirectToRoute('advert_detail');
             }
             return $this->render('advert/edit_review.html.twig', [
                 'form' => $form->createView(),

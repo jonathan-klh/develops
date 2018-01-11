@@ -1,0 +1,35 @@
+<div class="head-body">
+    <div class="head-body-left">
+        <a href="{{ path('show_user', {'username': user.username}) }}" title="Profil">
+            <span class="name">{{ user.firstname ~ " " ~ user.lastname }}</span>
+        </a>
+        <span class="job">Développeur Web</span>
+        <div class="rate">
+        {% if user.rateAvg %}
+            <div class="rate-avg" style="width:{{ user.rateAvg|round }}%;"></div>
+            <div class="rate-avg-text">Note global</div>
+        {% else %}
+            <div class="rate-avg new-user" style="width: 100%;"></div>
+            <div class="rate-avg-text">Nouveau utilisateur</div>
+        {% endif %}
+        </div>
+        <div class="nb-reviews">{{ user.reviews|length }} avis</div>
+    </div>
+    <div class="head-body-right">
+        {% if user.reviews|length > 0 %}
+        <div class="last-reviews">
+            {% for review in lastReviews %}
+            <div class="l-review">
+                <span class="l-review-content">{{ review.comment|truncate(50) }}</span>
+                <span class="l-review-rate">{{ review.note }}/10</span><span class="l-review-customer">{{ review.createdBy.firstname ~ " " ~ review.createdBy.lastname }}</span>
+            </div>
+            {% endfor %}
+            {% if app.request.attributes.get('_route') == 'show_user' %}
+            <a href="{{ path('show_avis_user', {'username': user.username}) }}" title="Consulter tous les avis">Consulter tous les avis</a>
+            {% else %}
+            <a href="{{ path('show_user', {'username': user.username}) }}" title="Consulter tous les avis">Consulter le profil</a>
+            {% endif %}
+        </div>
+        {% endif %}
+    </div>
+</div>

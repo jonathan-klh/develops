@@ -12,7 +12,7 @@ use Doctrine\ORM\Mapping\UniqueConstraint;
  * @ORM\Table(name="review",
  *    uniqueConstraints={
  *        @UniqueConstraint(name="review_unique",
- *            columns={"developer", "client", "advert"})
+ *            columns={"created_by", "advert", "candidate"})
  *    }
  * )
  * @ORM\Entity(repositoryClass="AppBundle\Repository\ReviewRepository")
@@ -29,20 +29,20 @@ class Review
     private $id;
 
     /**
-     * @var User $developer
+     * @var User $candidate
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="reviews")
-     * @ORM\JoinColumn(name="developer", referencedColumnName="id")
+     * @ORM\JoinColumn(name="candidate", referencedColumnName="id")
      */
-    private $developer;
+    private $candidate;
 
     /**
-     * @var User $client
+     * @var User $createdBy
      *
      * @ORM\ManyToOne(targetEntity="User", inversedBy="writtenReviews")
-     * @ORM\JoinColumn(name="client", referencedColumnName="id")
+     * @ORM\JoinColumn(name="created_by", referencedColumnName="id")
      */
-    private $client;
+    private $createdBy;
 
     /**
      * @var Advert $advert
@@ -133,55 +133,6 @@ class Review
     }
 
     /**
-     * Set developer
-     *
-     * @param \AppBundle\Entity\User $developer
-     *
-     * @return Review
-     */
-    public function setDeveloper(\AppBundle\Entity\User $developer = null)
-    {
-        $this->developer = $developer;
-
-        return $this;
-    }
-
-    /**
-     * Get developer
-     *
-     * @return \AppBundle\Entity\User
-     */
-    public function getDeveloper()
-    {
-        return $this->developer;
-    }
-
-
-    /**
-     * Set client
-     *
-     * @param \AppBundle\Entity\User $client
-     *
-     * @return Review
-     */
-    public function setClient(\AppBundle\Entity\User $client = null)
-    {
-        $this->client = $client;
-
-        return $this;
-    }
-
-    /**
-     * Get client
-     *
-     * @return \AppBundle\Entity\User
-     */
-    public function getClient()
-    {
-        return $this->client;
-    }
-
-    /**
      * Set createdDate
      *
      * @param \DateTime $createdDate
@@ -228,5 +179,53 @@ class Review
     public function getAdvert()
     {
         return $this->advert;
+    }
+
+    /**
+     * Set candidate
+     *
+     * @param \AppBundle\Entity\User $candidate
+     *
+     * @return Review
+     */
+    public function setCandidate(\AppBundle\Entity\User $candidate = null)
+    {
+        $this->candidate = $candidate;
+
+        return $this;
+    }
+
+    /**
+     * Get candidate
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getCandidate()
+    {
+        return $this->candidate;
+    }
+
+    /**
+     * Set createdBy
+     *
+     * @param \AppBundle\Entity\User $createdBy
+     *
+     * @return Review
+     */
+    public function setCreatedBy(\AppBundle\Entity\User $createdBy = null)
+    {
+        $this->createdBy = $createdBy;
+
+        return $this;
+    }
+
+    /**
+     * Get createdBy
+     *
+     * @return \AppBundle\Entity\User
+     */
+    public function getCreatedBy()
+    {
+        return $this->createdBy;
     }
 }

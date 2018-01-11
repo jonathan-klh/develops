@@ -37,8 +37,8 @@ class ReviewService
         
         if ($form->isSubmitted() && $form->isValid()){
             $review->setAdvert($advert);
-            $review->setClient($advert->getCreatedBy());
-            $review->setDeveloper($advert->getCandidateSelected());
+            $review->setCreatedBy($advert->getCreatedBy());
+            $review->setCandidate($advert->getCandidateSelected());
             $review->setCreatedDate(new \Datetime());
             $this->em->persist($review);
             $this->em->flush();
@@ -61,6 +61,7 @@ class ReviewService
             
             if ($form->isSubmitted() && $form->isValid()){
                 $this->em->flush();
+                $this->setRateAvgToUser($advert);
                 return true;
             }
 
@@ -68,6 +69,16 @@ class ReviewService
         }
 
         return false;
-    } 
+    }
+
+    /*
+     * Cette méthode set la note moyenne d'un utilisateur en pourcentage
+     */
+    public function setRateAvgToUser($advert)
+    {
+        $candidate = $advert->getCandidate();
+        $candidate->setRateAvg($this->repository->getUserRateAvg($candidate));
+        $this->em->flush();
+    }
 
 }

@@ -1,69 +1,5 @@
 {% extends 'base.html.twig' %}
 {% block body %}
-    <style>
-        .head-body .name {
-            display: block;
-            color: #5d5d5d;
-            font-size: 18px;
-            font-weight: bold;
-        }
-        .head-body .job {
-            display: block;
-            color: #9d9d9d;
-            font-size: 14px;
-            font-style: italic;
-        }
-        .head-body{
-            font-size: 0;
-        }
-        .head-body-left, .head-body-right{
-            display: inline-block;
-            font-size: 14px;
-            vertical-align: top;
-        }
-        .head-body-left {
-            width: 35%;
-        }
-        .head-body-right{
-            width: 65%;
-        }
-        .head-body-left .rate {
-            width: 90%;
-            height: 25px;
-            margin: 10px 0;
-            border: 1px solid #9d9d9d;
-            border-radius: 4px;
-        }
-        .head-body-left .rate-avg {
-            height: 23px;
-            border: 1px solid #FFF;
-            border-radius: 4px;
-            background: #7697ff;
-        }
-        .last-reviews {
-            padding: 0 10px;
-            text-align: center;
-        }
-        .l-review {
-            margin: 3px 0;
-            font-size: 13px;
-            position: relative;
-            text-align: left;
-        }
-        .l-review .l-review-content {
-            display: block;
-            font-style: italic;
-            padding: 0 10px;
-        }
-        .l-review .l-review-rate {
-
-        }
-        .l-review .l-review-customer {
-            position: absolute;
-            right:0;
-            bottom: 0;
-        }
-    </style>
     <section id="profil" class="show-user">
         <div class="left-infos">
             <div class="photo">
@@ -83,31 +19,15 @@
             </div>
         </div>
         <div class="body-infos">
-            <div class="head-body">
-                <div class="head-body-left">
-                    <span class="name">{{ user.firstname ~ " " ~ user.lastname }}</span>
-                    <span class="job">Développeur Web</span>
-                    <div class="rate">
-                        <div class="rate-avg" style="width:87%;"></div>
-                    </div>
-                    <div class="nb-reviews">35 avis</div>
-                </div>
-                <div class="head-body-right">
-                    <div class="last-reviews">
-                        {% for review in user.reviews %}
-                        <div class="l-review">
-                            <span class="l-review-content">{{ review.comment|truncate(50) }}</span>
-                            <span class="l-review-rate">{{ review.note }}/10</span><span class="l-review-customer">{{ review.client.firstname ~ " " ~ review.client.lastname }}</span>
-                        </div>
-                        {% endfor %}
-                        <a href="{{ path('show_avis_user', {'username': user.username}) }}" title="Consulter tous les avis">Consulter tous les avis</a>
-                    </div>
-                </div>
-            </div>
+            {{ include('@FOSUser/More/_head_body.html.twig') }}
             <div class="all-reviews">
                 <h2>Tous mes avis</h2>
                 {% for rw in user.reviews %}
-
+                <div class="review">
+                    <span class="note">{{ rw.note }}/10</span>
+                    <p>{{ rw.comment }}</p>
+                    <p>{{ rw.createdBy.firstname ~ " " ~ rw.createdBy.lastname }}</p>
+                </div>
                 {% endfor %}
             </div>
         </div>

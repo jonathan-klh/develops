@@ -26,9 +26,11 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('AppBundle:User')->findOneBy(['username' => $username]);
+        $lastReviews = $em->getRepository('AppBundle:Review')->findLastReviewsByUser($user);
 
         return $this->render('@FOSUser/More/show_user.html.twig', array(
-            'user' => $user
+            'user' => $user,
+            'lastReviews' => $lastReviews,
         ));
     }
 
@@ -39,9 +41,11 @@ class UserController extends Controller
     {
         $em = $this->getDoctrine()->getManager();
         $user = $em->getRepository('AppBundle:User')->findOneBy(['username' => $username]);
+        $lastReviews = $em->getRepository('AppBundle:Review')->findLastReviewsByUser($user);
 
         return $this->render('@FOSUser/More/show_avis_user.html.twig', array(
-            'user' => $user
+            'user' => $user,
+            'lastReviews' => $lastReviews,
         ));
     }
 

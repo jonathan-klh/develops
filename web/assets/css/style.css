@@ -111,6 +111,77 @@ body{
     width: 50%;
 }
 
+#profil .head-body .name {
+    display: block;
+    color: #5d5d5d;
+    font-size: 18px;
+    font-weight: bold;
+}
+#profil .head-body .job {
+    display: block;
+    color: #9d9d9d;
+    font-size: 14px;
+    font-style: italic;
+}
+#profil .head-body{
+    font-size: 0;
+}
+#profil .head-body-left, .head-body-right{
+    display: inline-block;
+    font-size: 14px;
+    vertical-align: top;
+}
+#profil .head-body-left {
+    width: 35%;
+}
+#profil .head-body-right{
+    width: 65%;
+}
+#profil .head-body-left .rate {
+    position: relative;
+    width: 90%;
+    height: 25px;
+    margin: 10px 0;
+    border: 1px solid #9d9d9d;
+    border-radius: 4px;
+}
+#profil .head-body-left .rate-avg {
+    height: 23px;
+    border: 1px solid #FFF;
+    border-radius: 4px;
+    background: #7697ff;
+}
+#profil .head-body-left .rate-avg.new-user {
+    background: #f5fb5b;
+}
+#profil .head-body-left .rate-avg-text{
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    text-align: center;
+    line-height: 24px;
+}
+#profil .last-reviews {
+    padding: 0 10px;
+    text-align: center;
+}
+#profil .l-review {
+    margin: 3px 0;
+    font-size: 13px;
+    position: relative;
+    text-align: left;
+}
+#profil .l-review .l-review-content {
+    display: block;
+    font-style: italic;
+    padding: 0 10px;
+}
+#profil .l-review .l-review-customer {
+    position: absolute;
+    right:0;
+    bottom: 0;
+}
 
 
 /* Small devices (tablets, 768px and up) => Taille sm */

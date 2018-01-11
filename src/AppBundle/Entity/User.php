@@ -9,6 +9,7 @@ use Doctrine\ORM\Mapping as ORM;
 /**
  * @ORM\Entity
  * @ORM\Table(name="user")
+ * @ORM\Entity(repositoryClass="AppBundle\Repository\UserRepository")
  */
 class User extends BaseUser
 {
@@ -60,14 +61,20 @@ class User extends BaseUser
     private $adverts;
 
     /**
-     * @ORM\OneToMany(targetEntity="Review", mappedBy="developer")
+     * @ORM\OneToMany(targetEntity="Review", mappedBy="candidate")
      */
     private $reviews;
 
     /**
-     * @ORM\OneToMany(targetEntity="Review", mappedBy="client")
+     * @ORM\OneToMany(targetEntity="Review", mappedBy="createdBy")
      */
     private $writtenReviews;
+
+    /**
+     * Correspond à la note moyenne utilisateur de tous les avis en pourcentage
+     * @ORM\Column(type="float", nullable=true)
+     */
+    private $rateAvg;
 
     public function __construct()
     {
@@ -335,5 +342,29 @@ class User extends BaseUser
     public function getWrittenReviews()
     {
         return $this->writtenReviews;
+    }
+
+    /**
+     * Set rateAvg
+     *
+     * @param float $rateAvg
+     *
+     * @return User
+     */
+    public function setRateAvg($rateAvg)
+    {
+        $this->rateAvg = $rateAvg;
+
+        return $this;
+    }
+
+    /**
+     * Get rateAvg
+     *
+     * @return float
+     */
+    public function getRateAvg()
+    {
+        return $this->rateAvg;
     }
 }

@@ -6,4 +6,20 @@
    </h1>
     id advert : {{ advert.id }},
     selectionner : {{ advert.candidateSelected.username }}
+    <br>
+    <div class="review">
+        {% if advert.review is null %}
+            <h3>Aucun avis disponible</h3>
+            {% if app.user == advert.createdBy %}
+                <a href="{{ path('advert_review_add',{'id':advert.id}) }}" title="">Laisser un avis</a>
+            {% endif %}
+        {% else %}
+            <h3>Avis :</h3>
+            <span class="note">{{ advert.review.note }}/10</span>
+            <p>{{ advert.review.comment }}</p>
+            {% if app.user == advert.createdBy %}
+                <a href="{{ path('advert_review_edit',{'id':advert.id}) }}" title="">Modifier l'avis</a>
+            {% endif %}
+        {% endif %}
+    </div>
 {% endblock %}
