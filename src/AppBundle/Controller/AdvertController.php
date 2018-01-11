@@ -12,6 +12,7 @@ use Symfony\Bundle\FrameworkBundle\Controller\Controller;
 use Symfony\Component\HttpFoundation\JsonResponse;
 use Symfony\Component\HttpFoundation\Request;
 use AppBundle\Service\ReviewService;
+use Symfony\Component\Security\Core\Exception\AccessDeniedException;
 
 class AdvertController extends Controller
 {
@@ -131,6 +132,10 @@ class AdvertController extends Controller
      */
     public function showCandidateAction(Advert $advert)
     {
+        if ($advert->getCandidateSelected()){
+            throw new AccessDeniedException('A candidate has already been selected');
+        }
+
         $candidates = $advert->getCandidates()->getValues();
 
         return $this->render('advert/candidates.html.twig', [
@@ -165,13 +170,16 @@ class AdvertController extends Controller
      */
     public function selectCandidateAction(Request $request, Advert $advert)
     {
+        if ($advert->getCandidateSelected()){
+            throw new AccessDeniedException('A candidate has already been selected');
+        }
+
         $user = $request->get('idCandidate');
         $em = $this->getDoctrine()->getManager();
 
         try{
             $advert->setCandidateSelected($user);
             $advert->setStatus('in progress');
-            //dump($advert);die;
             $em->persist($advert);
             $em->flush();
 
@@ -179,6 +187,6 @@ class AdvertController extends Controller
             return new JsonResponse($e->getMessage(),400);
         }
 
-        return $this->redirectToRoute('advert_candidates', ['id' => $advert->getId()]);
+        return $this->redirectToRoute('advert_my');
     }
 }
