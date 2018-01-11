@@ -72,8 +72,7 @@ class Advert
     private $candidates;
 
     /**
-     * One Advert has One User selected (candidate).
-     * @ORM\OneToOne(targetEntity="User")
+     * @ORM\ManyToOne(targetEntity="User")
      * @ORM\JoinColumn(name="candidate_selected", referencedColumnName="id")
      */
     private $candidateSelected;
@@ -260,6 +259,7 @@ class Advert
     {
         return $this->createdDate;
     }
+
 
     /**
      * Set candidateSelected

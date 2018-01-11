@@ -26,10 +26,14 @@
                         </button>
                         <ul class="dropdown-menu" role="menu">
                             {% if app.user and advert.candidates|length > 0 %}
-                                <li><a href="{{ path('advert_candidates', {id: advert.id}) }}">candidats</a></li>
-                            {% else  %}
+                                {% if advert.candidateSelected is null %}
+                                    <li><a href="{{ path('advert_candidates', {id: advert.id}) }}">Candidats</a></li>
+                                {% else %}
+                                    <li><a href="{{ path('advert_detail', {id:  advert.id}) }}">Infos</a></li>
+                                {% endif %}
+                            {% else %}
                                 <li><a href="#">Aucun candidat</a></li>
-                            {% endif  %}
+                            {% endif %}
                             {% if advert.status != 'in progress' %}
                                 <li><a href="{{ path('advert_edit', {id: advert.id}) }}">Modifier</a></li>
                                 <li>
