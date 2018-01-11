@@ -27,9 +27,9 @@
                         <ul class="dropdown-menu" role="menu">
                             {% if app.user and advert.candidates|length > 0 %}
                                 {% if advert.candidateSelected is null%}
-                                    <li><a href="{{ path('advert_candidates', {id: advert.id}) }}">candidats</a></li>
+                                    <li><a href="{{ path('advert_candidates', {id: advert.id}) }}">Candidats</a></li>
                                 {% else  %}
-                                    <li><a href="{{ path('show_user', {username:  advert.candidateSelected.username}) }}">Profil candidat</a></li>
+                                    <li><a href="{{ path('advert_detail', {id:  advert.id}) }}">Infos</a></li>
                                 {% endif  %}
                             {% else  %}
                                 <li><a href="#">Aucun candidat</a></li>

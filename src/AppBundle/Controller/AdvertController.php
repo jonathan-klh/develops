@@ -72,6 +72,14 @@ class AdvertController extends Controller
     }
 
     /**
+     * @Route("/advert/{id}/show", name="advert_detail")
+     */
+    public function detailAction(Advert $advert)
+    {
+        dump($advert);die;
+    }
+
+    /**
      * @Route("/advert/{id}/delete", name="advert_delete")
      * @Method("DELETE")
      */
@@ -187,6 +195,6 @@ class AdvertController extends Controller
             return new JsonResponse($e->getMessage(),400);
         }
 
-        return $this->redirectToRoute('advert_my');
+        return $this->redirectToRoute('advert_detail', [ 'id' => $advert->getId()]);
     }
 }
