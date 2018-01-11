@@ -5,12 +5,11 @@
 
         <div id="candidate-{{ candidate.id }}" class="panel panel-default">
             <div class="panel-heading">{{ candidate.username }}
-
-            </div>
-            <div class="panel-body">
                 <a href="{{ path('show_user', {username: candidate.username}) }}">Profil</a>
                 <a href="{{ path('advert_select_candidate', {id: advert.id , idCandidate: candidate.id}) }}">Sélectionner</a>
-                {#{{ advert.description }}#}
+            </div>
+            <div class="panel-body">
+                {#{{ Todo Ajouter le texte present dans advertMessage par annonce }}#}
             </div>
             <div class="panel-footer">
                 Footer

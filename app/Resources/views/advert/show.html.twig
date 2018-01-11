@@ -5,5 +5,14 @@
        Détail page
    </h1>
     id advert : {{ advert.id }},
-    selectionner : {{ advert.candidateSelected.username }}
+    {% if advert.candidateSelect.username is defined %}
+        selectionné : {{ advert.candidateSelected.username }}
+    {% endif %}
+
+    {% if app.user != advert.createdBy %}
+        {% if app.user not in advert.candidates %}
+            {{ form(formAdvertContact) }}
+        {% endif %}
+    {% endif %}
+
 {% endblock %}

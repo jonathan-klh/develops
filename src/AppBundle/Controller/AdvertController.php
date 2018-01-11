@@ -3,7 +3,9 @@
 namespace AppBundle\Controller;
 
 use AppBundle\Entity\Advert;
+use AppBundle\Entity\AdvertMessage;
 use AppBundle\Entity\User;
+use AppBundle\Form\AdvertMessageType;
 use AppBundle\Form\AdvertType;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\Method;
 use Sensio\Bundle\FrameworkExtraBundle\Configuration\ParamConverter;
@@ -74,10 +76,28 @@ class AdvertController extends Controller
     /**
      * @Route("/advert/{id}/show", name="advert_detail")
      */
-    public function detailAction(Advert $advert)
+    public function detailAction(Request $request, Advert $advert)
     {
+        $advertMessage = new AdvertMessage();
+        $formAdvertContact = $this->createForm(AdvertMessageType::class, $advertMessage);
+        $formAdvertContact->handleRequest($request);
+
+        if ($formAdvertContact->isSubmitted() && $formAdvertContact->isValid()) {
+            $em = $this->getDoctrine()->getManager();
+            $advertMessage->setUser($this->getUser());
+            $advertMessage->setAdvert($advert);
+            $em->persist($advertMessage);
+            $em->flush();
+
+            return $this->redirectToRoute('advert_apply', array(
+                'id' => $advert->getId(),
+            ));
+        }
+
+
         return $this->render('advert/show.html.twig', [
-            'advert' => $advert
+            'advert' => $advert,
+            'formAdvertContact' => $formAdvertContact->createView(),
         ]);
     }
 
