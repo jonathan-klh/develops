@@ -47,7 +47,7 @@ class Review
     /**
      * @var Advert $advert
      *
-     * @ORM\OneToOne(targetEntity="Advert", inversedBy="review")
+     * @ORM\OneToOne(targetEntity="Advert", inversedBy="review", cascade={"persist"})
      * @ORM\JoinColumn(name="advert", referencedColumnName="id")
      */
     private $advert;
@@ -215,6 +215,7 @@ class Review
     public function setAdvert(\AppBundle\Entity\Advert $advert = null)
     {
         $this->advert = $advert;
+        $advert->setReview($this);
 
         return $this;
     }

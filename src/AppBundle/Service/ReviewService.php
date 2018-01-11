@@ -48,4 +48,26 @@ class ReviewService
         return $form;
     }
 
+    /*
+     * La méthode editReview permet de modifier un avi
+     * dans un délai maximum de 3 jour à partir du premier émis
+     */
+    public function editReview($advert)
+    {
+        $advert = $advert->getReview();
+        if (date_diff($advert->getCreatedDate(), new \Datetime())->days <= 3) {
+            $form = $this->container->get('form.factory')->create(ReviewType::class, $advert);
+            $form->handleRequest($this->request);
+            
+            if ($form->isSubmitted() && $form->isValid()){
+                $this->em->flush();
+                return true;
+            }
+
+            return $form;
+        }
+
+        return false;
+    } 
+
 }

@@ -140,7 +140,7 @@ class AdvertController extends Controller
     }
 
     /**
-     * @Route("/advert/{id}/addreview", name="advert_add_review")
+     * @Route("/advert/{id}/review/add", name="advert_review_add")
      */
     public function addReviewAction(Advert $advert, ReviewService $reviewService)
     {
@@ -149,7 +149,26 @@ class AdvertController extends Controller
             if($form === true) {
                 return $this->redirectToRoute('advert_edit', array('id' => $advert->getId()));
             }
-            return $this->render('advert/add_review.html.twig', [
+            return $this->render('advert/edit_review.html.twig', [
+                'form' => $form->createView(),
+            ]);
+        }
+        return $this->redirectToRoute('advert_index');
+    }
+
+    /**
+     * @Route("/advert/{id}/review/edit", name="advert_review_edit")
+     */
+    public function editReviewAction(Advert $advert, ReviewService $reviewService)
+    {
+        if ($this->getUser() == $advert->getCreatedBy()){
+            $form = $reviewService->editReview($advert);
+            if($form === true) {
+                return $this->redirectToRoute('advert_edit', array('id' => $advert->getId()));
+            } elseif ($form === false) {
+                return $this->redirectToRoute('advert_index');
+            }
+            return $this->render('advert/edit_review.html.twig', [
                 'form' => $form->createView(),
             ]);
         }

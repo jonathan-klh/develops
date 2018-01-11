@@ -33,6 +33,19 @@ class UserController extends Controller
     }
 
     /**
+     * @Route("/profile/show/{username}/reviews", name="show_avis_user")
+     */
+    public function showAvisUser($username)
+    {
+        $em = $this->getDoctrine()->getManager();
+        $user = $em->getRepository('AppBundle:User')->findOneBy(['username' => $username]);
+
+        return $this->render('@FOSUser/More/show_avis_user.html.twig', array(
+            'user' => $user
+        ));
+    }
+
+    /**
      * @Route("/profile/informations", name="informations")
      */
     public function modifsInfosAction(Request $request) {
