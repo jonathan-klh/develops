@@ -94,7 +94,6 @@ class AdvertController extends Controller
             ));
         }
 
-
         return $this->render('advert/show.html.twig', [
             'advert' => $advert,
             'formAdvertContact' => $formAdvertContact->createView(),
@@ -166,11 +165,14 @@ class AdvertController extends Controller
             throw new AccessDeniedException('A candidate has already been selected');
         }
 
+        $repo = $this->getDoctrine()->getRepository(AdvertMessage::class);
         $candidates = $advert->getCandidates()->getValues();
+        $texts = $repo->findBy(array("advert" => $advert->getId()));
 
         return $this->render('advert/candidates.html.twig', [
             'candidates' => $candidates,
-            'advert' => $advert
+            'advert' => $advert,
+            'texts' => $texts
         ]);
     }
 
