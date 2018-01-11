@@ -76,7 +76,9 @@ class AdvertController extends Controller
      */
     public function detailAction(Advert $advert)
     {
-        dump($advert);die;
+        return $this->render('advert/show.html.twig', [
+            'advert' => $advert
+        ]);
     }
 
     /**
